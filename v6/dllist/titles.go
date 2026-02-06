@@ -304,11 +304,14 @@ func (l *List) GenerateTitleStruct(games *[]gametdb.Game, defaultTitleType const
 			if !generateTitles {
 				continue
 			}
+			
+			var descriptorArray [7]string
+			copy(descriptorArray[:], game.Rating.Descriptor)
 
 			i := info.Info{}
 			i.MakeHeader(id, titleID, game.Controllers.Players, companyID, table.TitleType, table.ReleaseYear, table.ReleaseMonth, table.ReleaseDay)
 			i.RatingID = table.RatingID
-			i.MakeInfo(id, &game, fullTitle, synopsis, l.region, l.language, defaultTitleType, recommendations)
+			i.MakeInfo(id, &game, fullTitle, synopsis, l.region, l.language, defaultTitleType, recommendations, descriptorArray)
 		}
 	}
 }

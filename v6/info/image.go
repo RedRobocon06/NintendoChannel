@@ -105,6 +105,63 @@ func (i *Info) WriteCoverArt(buffer *bytes.Buffer, titleType constants.TitleType
 	i.Header.PictureSize = uint32(buffer.Len())
 }
 
+func (i *Info) WriteDetailedRatingImage(buffer *bytes.Buffer, region constants.Region, ratingDescriptors [7]string, fileID uint32) {
+	if (region == 2) {
+		for j, s := range ratingDescriptors {
+			convertedString := s // Since s is already a string, no need to convert
+			capitalized := capitalizeString(convertedString)
+
+			filename := fmt.Sprintf("%d-%d.jpg", fileID, j)
+
+			command := "convert"
+			args := []string{
+				"-size", "350x16", "xc:white",
+				"-font", "FOT-RodinNTLGPro-DB.otf",
+				"-pointsize", "14",
+				"-gravity", "West",
+				"-fill", "black",
+				"-annotate", "+1+1", capitalized,
+				"-size", "350x16", "xc:white", "+swap",
+				"-geometry", "+0+0",
+				"-composite", filename,
+			}
+
+			// Execute the command
+			cmd := exec.Command(command, args...)
+
+			// Capture the command's output and error
+			_, err := cmd.CombinedOutput()
+			if err != nil {
+				fmt.Println("Error:", err)
+				return
+			}
+
+			contents, err := ioutil.ReadFile(filename)
+			if err != nil {
+				fmt.Println("Error reading file:", err)
+				return
+			}
+
+            err = os.Remove(filename)
+
+            if err != nil {
+                fmt.Printf("Error removing the file: %v\n", err)
+                return
+            }
+
+			i.Header.DetailedRatingPictureTable[j].PictureOffset = i.GetCurrentSize(buffer)
+
+			buffer.Write(contents)
+
+            i.Header.DetailedRatingPictureTable[j].PictureSize = uint32(len(contents))
+
+			if j == 6 {
+				break
+			}
+		}
+	}
+}
+
 func (i *Info) WriteRatingImage(buffer *bytes.Buffer, region constants.Region) {
 	i.Header.RatingPictureOffset = i.GetCurrentSize(buffer)
 
