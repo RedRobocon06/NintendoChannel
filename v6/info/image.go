@@ -29,8 +29,8 @@ var titleTypeToStr = map[constants.TitleType]string{
 
 var consoleToImageType = map[constants.TitleType]string{
 	constants.Wii:             "cover",
-	constants.NintendoDS:      "box",
-	constants.NintendoThreeDS: "box",
+	constants.NintendoDS:      "cover",
+	constants.NintendoThreeDS: "cover",
 }
 
 var consoleToTempImageType = map[constants.TitleType][]byte{
