@@ -105,6 +105,7 @@ func MakeDownloadList(_generateTitles bool) {
 
 				temp := bytes.NewBuffer(nil)
 				list.WriteAll(temp)
+				temp.Write(list.imageBuffer.Bytes())
 
 				crcTable := crc32.MakeTable(crc32.IEEE)
 				checksum := crc32.Checksum(temp.Bytes(), crcTable)
