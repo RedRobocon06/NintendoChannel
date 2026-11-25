@@ -273,7 +273,7 @@ func (l *List) GenerateTitleStruct(games *[]gametdb.Game, defaultTitleType const
 				ReleaseYear:                releaseYear,
 				ReleaseMonth:               releaseMonth,
 				ReleaseDay:                 releaseDay,
-				RatingID:                   GetRatingID(game.Rating),
+				RatingID:                   GetRatingID(game.Rating, titleType),
 				WithFriendsFemaleSecondRow: 0,
 				WithFriendsFemaleFirstRow:  0,
 				WithFriendsMaleSecondRow:   0,
@@ -325,7 +325,10 @@ func (l *List) GenerateTitleStruct(games *[]gametdb.Game, defaultTitleType const
 	}
 }
 
-func GetRatingID(rating gametdb.Rating) uint8 {
+func GetRatingID(rating gametdb.Rating, titleType constants.TitleType) uint8 {
+	if titleType == constants.WiiChannel || titleType == constants.NintendoDSiWare {
+		return 0
+	}
 	if rating.Value == "" {
 		// Default to E/7/B
 		return 9
