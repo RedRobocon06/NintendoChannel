@@ -620,7 +620,11 @@ func (t *TitleTable) DetermineOtherFlags(game gametdb.Game) {
 	}
 
 	if isOnline {
-		mask |= 12
+		if t.TitleType == constants.NintendoThreeDS || t.TitleType == constants.ThreeDSDownload {
+			mask |= 4
+		} else {
+			mask |= 12
+		}
 	}
 
 	// TODO: We don't have titles with any videos at the moment
