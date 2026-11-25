@@ -32,6 +32,9 @@ func (i *Info) GetSupportedFeatures(game *gametdb.Game) {
 	if slices.Contains(constants.PaynPlayIDs, game.ID[:3]) {
 		i.SupportedFeatures.NintendoWifiConnection = 2
 	}
+	if i.Header.TitleType == constants.NintendoThreeDS || i.Header.TitleType == constants.ThreeDSDownload {
+		i.SupportedFeatures.NintendoWifiConnection = 0
+	}
 
 	if game.Controllers.MultiCart > 1 {
 		i.SupportedFeatures.WirelessPlay = 1
