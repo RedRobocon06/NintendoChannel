@@ -165,6 +165,14 @@ func (l *List) GenerateTitleStruct(games *[]gametdb.Game, defaultTitleType const
 
 		if game.Region == regionToGameTDB[l.region] || game.Region == "ALL" {
 			titleType := defaultTitleType
+			if game.Type != "" {
+				if mapped, ok := constants.TitleTypeMap[game.Type]; ok && mapped != 0 {
+					titleType = mapped
+				}
+				if defaultTitleType == constants.NintendoThreeDS && strings.HasPrefix(game.Type, "VC-") {
+					titleType = constants.ThreeDSDownload
+				}
+			}
 			// (Sketch) The first locale will always be English from what I have observed
 			title := game.Locale[0].Title
 			fullTitle := game.Locale[0].Title
@@ -175,7 +183,6 @@ func (l *List) GenerateTitleStruct(games *[]gametdb.Game, defaultTitleType const
 						title = locale.Title
 						fullTitle = locale.Title
 						synopsis = locale.Synopsis
-						titleType = constants.TitleTypeMap[game.Type]
 					}
 				}
 			}
@@ -307,7 +314,13 @@ func (l *List) GenerateTitleStruct(games *[]gametdb.Game, defaultTitleType const
 			i.MakeHeader(id, titleID, game.Controllers.Players, companyID, table.TitleType, table.ReleaseYear, table.ReleaseMonth, table.ReleaseDay)
 			i.RatingID = table.RatingID
 
-			i.MakeInfo(id, &game, fullTitle, synopsis, l.region, l.language, defaultTitleType, game.Rating.Descriptor, recommendations)
+			// DS games that have a demo get a "DS Download Service" tab on their info page.
+			var demos []info.DemoTable
+			if l.region == constants.NTSC && defaultTitleType == constants.NintendoDS {
+				demos = MatchDemos(fullTitle)
+			}
+
+			i.MakeInfo(id, &game, fullTitle, synopsis, l.region, l.language, defaultTitleType, game.Rating.Descriptor, recommendations, demos)
 		}
 	}
 }
