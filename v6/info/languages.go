@@ -16,8 +16,8 @@ type SupportedLanguages struct {
 
 func (i *Info) GetSupportedLanguages(languages string) {
 	for _, s := range strings.Split(languages, ",") {
-		switch s {
-		case "ZHCN":
+		switch strings.ToUpper(strings.TrimSpace(s)) {
+		case "ZHCN", "ZHTW":
 			i.SupportedLanguages.Chinese = 1
 			break
 		case "KO":
@@ -29,10 +29,10 @@ func (i *Info) GetSupportedLanguages(languages string) {
 		case "EN":
 			i.SupportedLanguages.English = 1
 			break
-		case "FR":
+		case "FR", "FRCA":
 			i.SupportedLanguages.French = 1
 			break
-		case "ES":
+		case "ES", "ESLA":
 			i.SupportedLanguages.Spanish = 1
 			break
 		case "DE":
