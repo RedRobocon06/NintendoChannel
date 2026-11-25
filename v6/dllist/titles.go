@@ -293,7 +293,7 @@ func (l *List) GenerateTitleStruct(games *[]gametdb.Game, defaultTitleType const
 				GamersAllSecondRow:         0,
 				GamersAllFirstRow:          0,
 				OtherFlags:                 0,
-				Unknown7:                   [4]byte{0, 0, 0},
+				Unknown7:                   GetLanguageFlags(game.Languages),
 				Unknown8:                   0,
 				MedalType:                  medal,
 				Unknown9:                   222,
@@ -629,4 +629,17 @@ func (t *TitleTable) DetermineOtherFlags(game gametdb.Game) {
 
 	// TODO: We don't have titles with any videos at the moment
 	t.OtherFlags = uint8(value & mask)
+}
+
+func GetLanguageFlags(languages string) [4]byte {
+	flags := [4]byte{0xA8, 0x03, 0, 0}
+	for _, s := range strings.Split(languages, ",") {
+		switch strings.ToUpper(strings.TrimSpace(s)) {
+		case "FR", "FRCA":
+			flags[0] |= 1
+		case "ES", "ESLA":
+			flags[0] |= 4
+		}
+	}
+	return flags
 }
