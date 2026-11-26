@@ -313,6 +313,9 @@ func (l *List) GenerateTitleStruct(games *[]gametdb.Game, defaultTitleType const
 			i := info.Info{}
 			i.MakeHeader(id, titleID, game.Controllers.Players, companyID, table.TitleType, table.ReleaseYear, table.ReleaseMonth, table.ReleaseDay)
 			i.RatingID = table.RatingID
+			if defaultTitleType == constants.NintendoDSiWare && isDSiWareWithoutInfoRating(game.ID, fullTitle) {
+				i.RatingID = 0
+			}
 
 			// DS games that have a demo get a "DS Download Service" tab on their info page.
 			var demos []info.DemoTable
@@ -325,8 +328,22 @@ func (l *List) GenerateTitleStruct(games *[]gametdb.Game, defaultTitleType const
 	}
 }
 
+func isDSiWareWithoutInfoRating(gameID, title string) bool {
+	lowerTitle := strings.ToLower(strings.TrimSpace(title))
+	if strings.Contains(lowerTitle, "nintendo dsi browser") || strings.Contains(lowerTitle, "flipnote studio") || strings.Contains(lowerTitle, "photo clock") {
+		return true
+	}
+	if len(gameID) >= 3 {
+		prefix := strings.ToUpper(gameID[:3])
+		if prefix == "HNG" || prefix == "KGU" || prefix == "KPC" {
+			return true
+		}
+	}
+	return false
+}
+
 func GetRatingID(rating gametdb.Rating, titleType constants.TitleType) uint8 {
-	if titleType == constants.WiiChannel || titleType == constants.NintendoDSiWare {
+	if titleType == constants.WiiChannel {
 		return 0
 	}
 	if rating.Value == "" {
