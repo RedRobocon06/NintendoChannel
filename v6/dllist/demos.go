@@ -24,65 +24,74 @@ type DemoTable struct {
 	RemovalYear   uint16
 	RemovalMonth  uint8
 	RemovalDay    uint8
-	_             uint32
+	Unknown       uint32
 	RatingID      uint8
 	IsNew         uint8
-	_             uint8
+	NewTagIndex   uint8
 	_             [205]byte
 }
 
 type DemoEntry struct {
-	ID       uint32
-	Title    string
-	Subtitle string
+	ID            uint32
+	Title         string
+	Subtitle      string
+	TitleID       uint32
+	CompanyOffset uint32
+	RemovalYear   uint16
+	RemovalMonth  uint8
+	RemovalDay    uint8
+	Unknown       uint32
+	RatingID      uint8
+	IsNew         uint8
+	NewTagIndex   uint8
 }
 
 var RegionalDemos = map[constants.Region][]DemoEntry{
 	constants.NTSC: {
-		{Title: "100 Classic Books"},
-		{Title: "America's Test Kitchen", Subtitle: "Pots de Crème Demo"},
-		{Title: "America's Test Kitchen", Subtitle: "Roasted Red Potatoes Demo"},
-		{Title: "Art Academy"},
-		{Title: "Big Brain Academy"},
-		{Title: "Brain Age Demo"},
-		{Title: "Brain Age 2 Demo"},
-		{Title: "Clubhouse Games", Subtitle: "(Darts)"},
-		{Title: "Clubhouse Games", Subtitle: "(Turncoat)"},
-		{Title: "Crosswords DS-Anagrams Demo"},
-		{Title: "Crosswords DS-Crosswords Demo"},
-		{Title: "Crosswords DS-Wordsearch Demo"},
-		{Title: "Custom Robo Arena"},
-		{Title: "Elite Beat Agents"},
-		{Title: "Flash Focus Demo"},
-		{Title: "Flipnote Studio Theater"},
-		{Title: "Fossil Fighters", Subtitle: "Cleaning Demo"},
-		{Title: "Fossil Fighters", Subtitle: "Gift Fossil (Air)"},
-		{Title: "Fossil Fighters", Subtitle: "Gift Fossil (Earth)"},
-		{Title: "Fossil Fighters", Subtitle: "Gift Fossil (Fire)"},
-		{Title: "Fossil Fighters", Subtitle: "Gift Fossil (Neutral)"},
-		{Title: "Fossil Fighters", Subtitle: "Gift Fossil (Water)"},
-		{Title: "Fossil Fighters: Champions"},
-		{Title: "Kirby Mass Attack"},
-		{Title: "Magnetica"},
-		{Title: "Mario Kart DS"},
-		{Title: "Mario vs. Donkey Kong 2:", Subtitle: "March of the Minis"},
-		{Title: "Mario vs. Donkey Kong:", Subtitle: "Mini-Land Mayhem!"},
-		{Title: "Meteos"},
-		{Title: "Metroid Prime Hunters"},
-		{Title: "Mystery Case Files:", Subtitle: "MillionHeir"},
-		{Title: "Personal Trainer: Cooking", Subtitle: "Lasagna Demo"},
-		{Title: "Personal Trainer: Cooking", Subtitle: "Mac & Cheese Demo"},
-		{Title: "Personal Trainer: Math"},
-		{Title: "Picross 3D"},
-		{Title: "Picross DS"},
-		{Title: "Planet Puzzle League"},
-		{Title: "Pokémon Mystery Dungeon:", Subtitle: "Explorers of Sky Demo"},
-		{Title: "Pokémon Ranger: Guardian Signs", Subtitle: "Demo"},
-		{Title: "Pokémon Trozei!"},
-		{Title: "Rhythm Heaven"},
-		{Title: "Tetris DS", Subtitle: "(Push)"},
-		{Title: "Tetris DS", Subtitle: "(Standard)"},
-		{Title: "True Swing Golf"},
+		{ID: 839603576, Title: "100 Classic Books", TitleID: 1737258670, CompanyOffset: 27296, RemovalYear: 65535, RemovalMonth: 255, RemovalDay: 255, RatingID: 9},
+		{ID: 76014458, Title: "America's Test Kitchen", Subtitle: "Pots de Crème Demo", TitleID: 1764120452, CompanyOffset: 27296, RemovalYear: 65535, RemovalMonth: 255, RemovalDay: 255, RatingID: 9},
+		{ID: 941060636, Title: "America's Test Kitchen", Subtitle: "Roasted Red Potatoes Demo", TitleID: 1764120452, CompanyOffset: 27296, RemovalYear: 65535, RemovalMonth: 255, RemovalDay: 255, RatingID: 9},
+		{ID: 839603577, Title: "Art Academy", TitleID: 1737258670, CompanyOffset: 27296, RemovalYear: 65535, RemovalMonth: 255, RemovalDay: 255, RatingID: 9},
+		{ID: 839603578, Title: "Big Brain Academy", TitleID: 1737258670, CompanyOffset: 27296, RemovalYear: 65535, RemovalMonth: 255, RemovalDay: 255, RatingID: 9},
+		{ID: 359174269, Title: "Brain Age Demo", TitleID: 33884163, CompanyOffset: 27296, RemovalYear: 65535, RemovalMonth: 255, RemovalDay: 255, RatingID: 9},
+		{ID: 568827099, Title: "Brain Age 2 Demo", TitleID: 284234639, CompanyOffset: 27296, RemovalYear: 65535, RemovalMonth: 255, RemovalDay: 255, RatingID: 9},
+		{ID: 839603579, Title: "Clubhouse Games", Subtitle: "(Darts)", TitleID: 1737258670, CompanyOffset: 27296, RemovalYear: 65535, RemovalMonth: 255, RemovalDay: 255, RatingID: 9},
+		{ID: 839603580, Title: "Clubhouse Games", Subtitle: "(Turncoat)", TitleID: 1737258670, CompanyOffset: 27296, RemovalYear: 65535, RemovalMonth: 255, RemovalDay: 255, RatingID: 9},
+		{ID: 839603581, Title: "Crosswords DS-Anagrams Demo", TitleID: 1737258670, CompanyOffset: 27296, RemovalYear: 65535, RemovalMonth: 255, RemovalDay: 255, RatingID: 9},
+		{ID: 152017202, Title: "Crosswords DS-Crosswords Demo", TitleID: 1599282847, CompanyOffset: 27296, RemovalYear: 65535, RemovalMonth: 255, RemovalDay: 255, RatingID: 9},
+		{ID: 839603582, Title: "Crosswords DS-Wordsearch Demo", TitleID: 1737258670, CompanyOffset: 27296, RemovalYear: 65535, RemovalMonth: 255, RemovalDay: 255, RatingID: 9},
+		{ID: 839603583, Title: "Custom Robo Arena", TitleID: 1737258670, CompanyOffset: 27296, RemovalYear: 65535, RemovalMonth: 255, RemovalDay: 255, RatingID: 10},
+		{ID: 839603585, Title: "Elite Beat Agents", TitleID: 1737258670, CompanyOffset: 27296, RemovalYear: 65535, RemovalMonth: 255, RemovalDay: 255, RatingID: 10},
+		{ID: 1972710029, Title: "Flash Focus Demo", TitleID: 697480931, CompanyOffset: 27296, RemovalYear: 65535, RemovalMonth: 255, RemovalDay: 255, RatingID: 9},
+		{ID: 839603586, Title: "Flipnote Studio Theater", TitleID: 1737258670, CompanyOffset: 27296, RemovalYear: 65535, RemovalMonth: 255, RemovalDay: 255, RatingID: 9},
+		{ID: 1141533641, Title: "Fossil Fighters", Subtitle: "Cleaning Demo", TitleID: 1737258670, CompanyOffset: 27296, RemovalYear: 65535, RemovalMonth: 255, RemovalDay: 255, RatingID: 9},
+		{ID: 1687629128, Title: "Fossil Fighters", Subtitle: "Gift Fossil (Air)", TitleID: 1737258670, CompanyOffset: 27296, RemovalYear: 65535, RemovalMonth: 255, RemovalDay: 255, RatingID: 9},
+		{ID: 548229158, Title: "Fossil Fighters", Subtitle: "Gift Fossil (Earth)", TitleID: 1737258670, CompanyOffset: 27296, RemovalYear: 65535, RemovalMonth: 255, RemovalDay: 255, RatingID: 9},
+		{ID: 918716973, Title: "Fossil Fighters", Subtitle: "Gift Fossil (Fire)", TitleID: 1737258670, CompanyOffset: 27296, RemovalYear: 65535, RemovalMonth: 255, RemovalDay: 255, RatingID: 9},
+		{ID: 262123039, Title: "Fossil Fighters", Subtitle: "Gift Fossil (Neutral)", TitleID: 1737258670, CompanyOffset: 27296, RemovalYear: 65535, RemovalMonth: 255, RemovalDay: 255, RatingID: 9},
+		{ID: 1557878207, Title: "Fossil Fighters", Subtitle: "Gift Fossil (Water)", TitleID: 1737258670, CompanyOffset: 27296, RemovalYear: 65535, RemovalMonth: 255, RemovalDay: 255, RatingID: 9},
+		{ID: 2144771072, Title: "Fossil Fighters: Champions", TitleID: 1206858045, CompanyOffset: 27296, RemovalYear: 65535, RemovalMonth: 255, RemovalDay: 255, RatingID: 9},
+		{ID: 2043275873, Title: "Kirby Mass Attack", TitleID: 302350231, CompanyOffset: 27296, RemovalYear: 65535, RemovalMonth: 255, RemovalDay: 255, RatingID: 9},
+		{ID: 839603587, Title: "Magnetica", TitleID: 1737258670, CompanyOffset: 27296, RemovalYear: 65535, RemovalMonth: 255, RemovalDay: 255, RatingID: 9},
+		{ID: 839603588, Title: "Mario Kart DS", TitleID: 1737258670, CompanyOffset: 27296, RemovalYear: 65535, RemovalMonth: 255, RemovalDay: 255, RatingID: 9},
+		{ID: 839603589, Title: "Mario vs. Donkey Kong 2:", Subtitle: "March of the Minis", TitleID: 1737258670, CompanyOffset: 27296, RemovalYear: 65535, RemovalMonth: 255, RemovalDay: 255, RatingID: 9},
+		{ID: 839603590, Title: "Mario vs. Donkey Kong:", Subtitle: "Mini-Land Mayhem!", TitleID: 1737258670, CompanyOffset: 27296, RemovalYear: 65535, RemovalMonth: 255, RemovalDay: 255, RatingID: 9},
+		{ID: 839603591, Title: "Meteos", TitleID: 1737258670, CompanyOffset: 27296, RemovalYear: 65535, RemovalMonth: 255, RemovalDay: 255, RatingID: 9},
+		{ID: 839603592, Title: "Metroid Prime Hunters", TitleID: 1737258670, CompanyOffset: 27296, RemovalYear: 65535, RemovalMonth: 255, RemovalDay: 255, RatingID: 11},
+		{ID: 270763606, Title: "Mystery Case Files:", Subtitle: "MillionHeir", TitleID: 2042077528, CompanyOffset: 27296, RemovalYear: 65535, RemovalMonth: 255, RemovalDay: 255, RatingID: 9},
+		{ID: 1879850935, Title: "Personal Trainer: Cooking", Subtitle: "Lasagna Demo", TitleID: 1737258670, CompanyOffset: 27296, RemovalYear: 65535, RemovalMonth: 255, RemovalDay: 255, RatingID: 9},
+		{ID: 187959385, Title: "Personal Trainer: Cooking", Subtitle: "Mac & Cheese Demo", TitleID: 1737258670, CompanyOffset: 27296, RemovalYear: 65535, RemovalMonth: 255, RemovalDay: 255, RatingID: 9},
+		{ID: 692916852, Title: "Personal Trainer: Math", TitleID: 923223269, CompanyOffset: 27296, RemovalYear: 65535, RemovalMonth: 255, RemovalDay: 255, RatingID: 9},
+		{ID: 340771894, Title: "Picross 3D", TitleID: 1652375569, CompanyOffset: 27296, RemovalYear: 65535, RemovalMonth: 255, RemovalDay: 255, RatingID: 9},
+		{ID: 839603593, Title: "Picross DS", TitleID: 1737258670, CompanyOffset: 27296, RemovalYear: 65535, RemovalMonth: 255, RemovalDay: 255, RatingID: 9},
+		{ID: 839603594, Title: "Planet Puzzle League", TitleID: 1737258670, CompanyOffset: 27296, RemovalYear: 65535, RemovalMonth: 255, RemovalDay: 255, RatingID: 9},
+		{ID: 839603595, Title: "Pokémon Mystery Dungeon:", Subtitle: "Explorers of Sky Demo", TitleID: 1737258670, CompanyOffset: 27296, RemovalYear: 65535, RemovalMonth: 255, RemovalDay: 255, RatingID: 9},
+		{ID: 2147201832, Title: "Pokémon Ranger: Guardian Signs", Subtitle: "Demo", TitleID: 2066395031, CompanyOffset: 27296, RemovalYear: 65535, RemovalMonth: 255, RemovalDay: 255, RatingID: 9},
+		{ID: 839603596, Title: "Pokémon Trozei!", TitleID: 1737258670, CompanyOffset: 27296, RemovalYear: 65535, RemovalMonth: 255, RemovalDay: 255, RatingID: 9},
+		{ID: 1308838811, Title: "Rhythm Heaven", TitleID: 1231101988, CompanyOffset: 27296, RemovalYear: 65535, RemovalMonth: 255, RemovalDay: 255, RatingID: 9},
+		{ID: 839603597, Title: "Tetris DS", Subtitle: "(Push)", TitleID: 1737258670, CompanyOffset: 27296, RemovalYear: 65535, RemovalMonth: 255, RemovalDay: 255, RatingID: 9},
+		{ID: 839603598, Title: "Tetris DS", Subtitle: "(Standard)", TitleID: 1737258670, CompanyOffset: 27296, RemovalYear: 65535, RemovalMonth: 255, RemovalDay: 255, RatingID: 9},
+		{ID: 839603599, Title: "True Swing Golf", TitleID: 1737258670, CompanyOffset: 27296, RemovalYear: 65535, RemovalMonth: 255, RemovalDay: 255, RatingID: 9},
 	},
 	constants.PAL:   {},
 	constants.Japan: {},
@@ -144,6 +153,9 @@ func (l *List) findTitleForDemo(demo DemoEntry) *TitleTable {
 	var fallback *TitleTable
 	for idx := range l.TitleTable {
 		t := &l.TitleTable[idx]
+		if demo.TitleID != 0 && t.ID == demo.TitleID {
+			return t
+		}
 		tName := strings.TrimSpace(decodeUTF16Z(t.TitleName[:]) + " " + decodeUTF16Z(t.Subtitle[:]))
 		tBase := decodeUTF16Z(t.TitleName[:])
 		nFull := normalizeTitle(tName)
@@ -180,8 +192,8 @@ func (l *List) MakeDemoTable() {
 		tempSubtitle := utf16.Encode([]rune(demo.Subtitle))
 		copy(subtitle[:], tempSubtitle)
 
-		var titleID uint32
-		var ratingID uint8 = 8
+		titleID := demo.TitleID
+		ratingID := demo.RatingID
 		companyOffset := l.Header.CompanyTableOffset
 
 		if matched := l.findTitleForDemo(demo); matched != nil {
@@ -203,11 +215,13 @@ func (l *List) MakeDemoTable() {
 			Subtitle:      subtitle,
 			TitleID:       titleID,
 			CompanyOffset: companyOffset,
-			RemovalYear:   0xFFFF,
-			RemovalMonth:  0xFF,
-			RemovalDay:    0xFF,
+			RemovalYear:   demo.RemovalYear,
+			RemovalMonth:  demo.RemovalMonth,
+			RemovalDay:    demo.RemovalDay,
+			Unknown:       demo.Unknown,
 			RatingID:      ratingID,
-			IsNew:         0,
+			IsNew:         demo.IsNew,
+			NewTagIndex:   demo.NewTagIndex,
 		})
 	}
 
@@ -225,9 +239,9 @@ func normalizeTitle(s string) string {
 	}, s)
 }
 
-func MatchDemos(region constants.Region, gameTitle string) []info.DemoTable {
+func MatchDemos(region constants.Region, titleID uint32, gameTitle string) []info.DemoTable {
 	want := normalizeTitle(gameTitle)
-	if want == "" {
+	if want == "" && titleID == 0 {
 		return nil
 	}
 
@@ -237,10 +251,9 @@ func MatchDemos(region constants.Region, gameTitle string) []info.DemoTable {
 		stripped := demoSuffix.ReplaceAllString(combined, "")
 		baseStripped := demoSuffix.ReplaceAllString(strings.TrimSpace(demo.Title), "")
 
-		if normalizeTitle(combined) != want &&
-			normalizeTitle(stripped) != want &&
-			normalizeTitle(demo.Title) != want &&
-			normalizeTitle(baseStripped) != want {
+		idMatch := titleID != 0 && demo.TitleID == titleID
+		nameMatch := want != "" && (normalizeTitle(combined) == want || normalizeTitle(stripped) == want || normalizeTitle(demo.Title) == want || normalizeTitle(baseStripped) == want)
+		if !idMatch && !nameMatch {
 			continue
 		}
 
