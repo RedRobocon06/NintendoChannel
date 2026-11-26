@@ -49,48 +49,49 @@ func (i *Info) MakeInfo(fileID uint32, game *gametdb.Game, title, synopsis strin
 	i.GetSupportedFeatures(game)
 	i.GetSupportedLanguages(game.Languages)
 
-	// Make title clean
-	if strings.Contains(title, ": ") {
-		splitTitle := strings.Split(title, ": ")
-		copy(i.Title[:], utf16.Encode([]rune(splitTitle[0])))
-		copy(i.Subtitle[:], utf16.Encode([]rune(splitTitle[1])))
-	} else if strings.Contains(title, " - ") {
-		splitTitle := strings.Split(title, " - ")
-		copy(i.Title[:], utf16.Encode([]rune(splitTitle[0])))
-		copy(i.Subtitle[:], utf16.Encode([]rune(splitTitle[1])))
-	} else if len(title) > 31 {
-		wrappedTitle := wordwrap.WrapString(title, 31)
-		for p, s := range strings.Split(wrappedTitle, "\n") {
-			switch p {
-			case 0:
-				copy(i.Title[:], utf16.Encode([]rune(s)))
-				break
-			case 1:
-				copy(i.Subtitle[:], utf16.Encode([]rune(s)))
-				break
-			default:
+	// Wrap title naturally across the two 30-character lines without stripping ':' or '-'
+	if len([]rune(title)) > 30 {
+		wrappedTitle := wordwrap.WrapString(title, 30)
+		for p, line := range strings.Split(wrappedTitle, "\n") {
+			if p == 0 {
+				copy(i.Title[:30], utf16.Encode([]rune(line)))
+			} else if p == 1 {
+				copy(i.Subtitle[:30], utf16.Encode([]rune(line)))
+			} else {
 				break
 			}
 		}
 	} else {
-		copy(i.Title[:], utf16.Encode([]rune(title)))
+		copy(i.Title[:30], utf16.Encode([]rune(title)))
 	}
 
-	// Make synopsis
-	wrappedSynopsis := strings.Split(wordwrap.WrapString(synopsis, 40), "\n")
-	if len(wrappedSynopsis) <= 3 {
-		for i2, s := range wrappedSynopsis {
-			copy(i.DescriptionText[i2][:], utf16.Encode([]rune(s)))
+	// Make tagline (first paragraph, 1-3 lines) and main synopsis (remaining text, up to 10 lines)
+	paragraphs := strings.SplitN(strings.TrimSpace(strings.ReplaceAll(synopsis, "\r\n", "\n")), "\n", 2)
+	taglineLines := strings.Split(wordwrap.WrapString(strings.TrimSpace(paragraphs[0]), 40), "\n")
+	for i2, line := range taglineLines {
+		if i2 >= 3 {
+			break
 		}
-	} else {
-		for i2, s := range wrappedSynopsis {
+		copy(i.DescriptionText[i2][:], utf16.Encode([]rune(line)))
+	}
+
+	var bodyParts []string
+	if len(taglineLines) > 3 {
+		bodyParts = append(bodyParts, strings.Join(taglineLines[3:], " "))
+	}
+	if len(paragraphs) > 1 && strings.TrimSpace(paragraphs[1]) != "" {
+		bodyParts = append(bodyParts, strings.TrimSpace(paragraphs[1]))
+	}
+
+	if len(bodyParts) > 0 {
+		wrappedBody := strings.Split(wordwrap.WrapString(strings.Join(bodyParts, "\n"), 40), "\n")
+		for i2, line := range wrappedBody {
 			if i2 == 10 {
 				break
-			} else if i2 == 9 {
-				s = strings.Split(s, ".")[0] + "."
+			} else if i2 == 9 && strings.Contains(line, ".") {
+				line = strings.Split(line, ".")[0] + "."
 			}
-
-			copy(i.CustomText[i2][:], utf16.Encode([]rune(s)))
+			copy(i.CustomText[i2][:], utf16.Encode([]rune(line)))
 		}
 	}
 
