@@ -317,7 +317,7 @@ func (l *List) GenerateTitleStruct(games *[]gametdb.Game, defaultTitleType const
 			// DS games that have a demo get a "DS Download Service" tab on their info page.
 			var demos []info.DemoTable
 			if defaultTitleType == constants.NintendoDS {
-				demos = MatchDemos(l.region, fullTitle)
+				demos = MatchDemos(l.region, id, fullTitle)
 			}
 
 			i.MakeInfo(id, &game, fullTitle, synopsis, l.region, l.language, defaultTitleType, game.Rating.Descriptor, recommendations, demos)
