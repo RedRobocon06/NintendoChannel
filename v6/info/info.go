@@ -44,6 +44,54 @@ type Info struct {
 
 var timePlayed = map[string]TimePlayed{}
 
+func formatGenreText(rawGenre string) string {
+	if strings.TrimSpace(rawGenre) == "" {
+		return ""
+	}
+
+	displayNames := map[string]string{
+		"2D platformer":        "2D Platformer",
+		"3D platformer":        "3D Platformer",
+		"first-person shooter": "First-Person Shooter",
+		"third-person shooter": "Third-Person Shooter",
+		"shoot 'em up":         "Shoot 'Em Up",
+		"point-and-click":      "Point-and-Click",
+		"role-playing":         "Role-Playing",
+	}
+
+	var genres []string
+	for _, part := range strings.Split(rawGenre, ",") {
+		key := strings.TrimSpace(part)
+		if key == "" {
+			continue
+		}
+		name, ok := displayNames[key]
+		if !ok {
+			words := strings.Fields(key)
+			for idx, w := range words {
+				if len(w) > 0 {
+					words[idx] = strings.ToUpper(w[:1]) + w[1:]
+				}
+			}
+			name = strings.Join(words, " ")
+		}
+
+		candidate := name
+		if len(genres) > 0 {
+			candidate = strings.Join(append(genres, name), ", ")
+		}
+		if len([]rune(candidate)) > 28 {
+			break
+		}
+		genres = append(genres, name)
+		if len(genres) == 3 {
+			break
+		}
+	}
+
+	return strings.Join(genres, ", ")
+}
+
 func (i *Info) MakeInfo(fileID uint32, game *gametdb.Game, title, synopsis string, region constants.Region, language constants.Language, titleType constants.TitleType, ratingDescriptors []string, recommendations map[string]common.TitleRecommendation, demos []DemoTable) {
 	i.GetSupportedControllers(&game.Controllers)
 	i.GetSupportedFeatures(game)
@@ -93,6 +141,10 @@ func (i *Info) MakeInfo(fileID uint32, game *gametdb.Game, title, synopsis strin
 			}
 			copy(i.CustomText[i2][:], utf16.Encode([]rune(line)))
 		}
+	}
+
+	if genreText := formatGenreText(game.Genre); genreText != "" {
+		copy(i.GenreText[:28], utf16.Encode([]rune(genreText)))
 	}
 
 	// Write the online players text if any
